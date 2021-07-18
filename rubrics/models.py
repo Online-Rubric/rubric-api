@@ -32,7 +32,7 @@ class Rubric(models.Model):
 
     score10 = models.IntegerField(default=0, name="Big O time and space are analyzed", validators=MaxValueValidator(3))
 
-    score11 = models.IntegerField(default=0, name="Explain an approach to testing", validators="MaxValueValidator"(3))
+    score11 = models.IntegerField(default=0, name="Explain an approach to testing", validators=MaxValueValidator(3))
 
     analyze_solution_notes = models.TextField()
 
