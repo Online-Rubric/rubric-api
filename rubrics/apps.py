@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class Rubric(AppConfig):
-    name = 'rubric'
+class rubrics(AppConfig):
+    name = 'rubrics'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Rubrics
+from .models import Rubric
 
 # Register your models here.
-admin.site.register(Rubrics)
+admin.site.register(Rubric)
