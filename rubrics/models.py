@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 
 class Rubric(models.Model):
@@ -7,37 +8,47 @@ class Rubric(models.Model):
     owner = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, null=True, blank=True
     )
-    score1 = models.IntegerField(default=0, name="Asked meaningful clarifying questions")
-    score2 = models.IntegerField(default=0, name="Identified inputs and outputs 		")
-    score3 = models.IntegerField(default=0, name="Visually illustrated the problem domain")
+    score1 = models.IntegerField(default=0, name="Asked meaningful clarifying questions", validators=MaxValueValidator(2))
 
-    score4 = models.IntegerField(default=0, name="Identified optimal data structure and/or algorithm")
+    score2 = models.IntegerField(default=0, name="Identified inputs and outputs", validators=MaxValueValidator(2))
 
-    score5 = models.IntegerField(default=0, name="Presented & understood a working algorithm")
+    score3 = models.IntegerField(default=0, name="Visually illustrated the problem domain", validators=MaxValueValidator(2))
 
-    score6 = models.IntegerField(default=0, name="Final code was syntactically correct")
+    score4 = models.IntegerField(default=0, name="Identified optimal data structure and/or algorithm", validators=MaxValueValidator(4))
 
-    score7 = models.IntegerField(default=0, name="Final code was idiomatically correct")
+    interpret_question_notes = models.TextField()
 
-    score8 = models.IntegerField(default=0, name="Solution was the best possible option")
+    score5 = models.IntegerField(default=0, name="Presented & understood a working algorithm", validators=MaxValueValidator(4))
 
-    score9 = models.IntegerField(default=0, name="Stepped through their solution")
+    score6 = models.IntegerField(default=0, name="Final code was syntactically correct", validators=MaxValueValidator(3))
 
-    score10 = models.IntegerField(default=0, name="Big O time and space are analyzed")
+    score7 = models.IntegerField(default=0, name="Final code was idiomatically correct", validators=MaxValueValidator(3))
 
-    score11 = models.IntegerField(default=0, name="Explain an approach to testing")
+    score8 = models.IntegerField(default=0, name="Solution was the best possible option", validators=MaxValueValidator(2))
 
-    score12 = models.IntegerField(default=0, name="Verbalized their thought process")
+    solve_problem_notes = models.TextField()
 
-    score13 = models.IntegerField(default=0, name="Used correct terminology")
+    score9 = models.IntegerField(default=0, name="Stepped through their solution", validators=MaxValueValidator(3))
 
-    score14 = models.IntegerField(default=0, name="Used the time available effectively")
+    score10 = models.IntegerField(default=0, name="Big O time and space are analyzed", validators=MaxValueValidator(3))
 
-    score15 = models.IntegerField(default=0, name="Was not overconfident (not listening to suggestions)")
+    score11 = models.IntegerField(default=0, name="Explain an approach to testing", validators="MaxValueValidator"(3))
 
-    score16 = models.IntegerField(default=0, name="Was not under-confident (unsure of known algorithm)")
+    analyze_solution_notes = models.TextField()
 
-    score17 = models.IntegerField(default=0, name="Whiteboard was readable (penmanship and spacing)")
+    score12 = models.IntegerField(default=0, name="Verbalized their thought process", validators=MaxValueValidator(6))
+
+    score13 = models.IntegerField(default=0, name="Used correct terminology", validators=MaxValueValidator(2))
+
+    score14 = models.IntegerField(default=0, name="Used the time available effectively", validators=MaxValueValidator(1))
+
+    score15 = models.IntegerField(default=0, name="Was not overconfident (not listening to suggestions)", validators=MaxValueValidator(1))
+
+    score16 = models.IntegerField(default=0, name="Was not under-confident (unsure of known algorithm)", validators=MaxValueValidator(1))
+
+    score17 = models.IntegerField(default=0, name="Whiteboard was readable (penmanship and spacing)", validators=MaxValueValidator(1))
+
+    communicate_effectively_notes = models.TextField()
 
 
     total = models.IntegerField(default=0, name="Total Score")
