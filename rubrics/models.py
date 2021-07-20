@@ -75,13 +75,12 @@ class Rubric(models.Model):
 
     communicate_effectively_notes = models.TextField()
 
-    #Total Score
-    total = models.IntegerField(default=0, name="total")
-
-
     comments = models.TextField(default="", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total_score(self):
+        return sum(Rubric.object.filter(IntegerField))
 
 
     def __str__(self):
