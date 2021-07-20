@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsStudentOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
 
 
@@ -9,7 +9,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
 
-        if obj.owner is None:
+        if obj.student is None:
             return True
 
-        return obj.owner == request.user
+        return obj.student == request.user

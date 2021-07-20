@@ -3,7 +3,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 from .models import Rubric
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsStudentOrReadOnly
 from .serializers import RubricSerializer
 
 
@@ -13,6 +13,6 @@ class RubricList(ListCreateAPIView):
 
 
 class RubricDetail(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsStudentOrReadOnly,)
     queryset = Rubric.objects.all()
     serializer_class = RubricSerializer
