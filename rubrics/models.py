@@ -5,16 +5,24 @@ from django.db.models.fields import IntegerField
 
 
 class Rubric(models.Model):
-    proctor = models.CharField(max_length=256,name="proctor",)
+
+    proctor = models.ForeignKey(
+        get_user_model(),
+        related_name="proctor",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+
     student = models.ForeignKey(
         get_user_model(), name="student", on_delete=models.CASCADE, null=True, blank=True
     )
 
     #We could do this as a charater field or as a time field
-    time_start =models.CharField(max_length=256,name="time_start",)
-    time_end = models.CharField(max_length=256,name="time_end",)
+    time_start =models.DateTimeField()
+    time_end = models.DateTimeField()
 
-    challenge = models.CharField(max_length=256,name="challenge")
+    challenge = models.CharField(max_length=256,name="challenge",default="", null=True, blank=True)
 
     #Asked meaningful clarifying questions
     clarify_question = models.IntegerField(default=0, name="clarify_question", validators=[MaxValueValidator(2)])
@@ -28,7 +36,7 @@ class Rubric(models.Model):
     #"Identified optimal data structure and/or algorithm"
     optimal_structure = models.IntegerField(default=0, name="optimal_structure", validators=[MaxValueValidator(4)])
 
-    interpret_question_notes = models.TextField()
+    interpret_question_notes = models.TextField(default="", null=True, blank=True)
 
     #Presented & understood a working algorithm
     working_algorithm = models.IntegerField(default=0, name="working_algorithm", validators=[MaxValueValidator(4)])
@@ -42,7 +50,7 @@ class Rubric(models.Model):
     #Solution was the best possible option
     best_solution = models.IntegerField(default=0, name="best_solution", validators=[MaxValueValidator(2)])
 
-    solve_problem_notes = models.TextField()
+    solve_problem_notes = models.TextField(default="", null=True, blank=True)
 
     #Stepped through their solution
     walkthrough_solution = models.IntegerField(default=0, name="walkthrough_solution", validators=[MaxValueValidator(3)])
@@ -53,7 +61,7 @@ class Rubric(models.Model):
     #Explain an approach to testing
     testing = models.IntegerField(default=0, name="testing", validators=[MaxValueValidator(3)])
 
-    analyze_solution_notes = models.TextField()
+    analyze_solution_notes = models.TextField(default="", null=True, blank=True)
 
     #Verbalized their thought process
     thought_process = models.IntegerField(default=0, name="thought_process", validators=[MaxValueValidator(6)])
@@ -73,20 +81,21 @@ class Rubric(models.Model):
     #Whiteboard was readable (penmanship and spacing)
     whiteboard = models.IntegerField(default=0, name="whiteboard", validators=[MaxValueValidator(1)])
 
-    communicate_effectively_notes = models.TextField()
-
-    #Total Score
-    total = models.IntegerField(default=0, name="total")
-
+    communicate_effectively_notes = models.TextField(default="", null=True, blank=True)
 
     comments = models.TextField(default="", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def total_score(self):
+        return sum(Rubric.object.filter(IntegerField))
+
+    @property
+    def percent(self):
+        return self.total_score/40
 
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.student
 
-# scores = Rubric.object.filter(IntegerField)
-# total_score = sum(scores)
-# percent = total_score/40
+## TRY Instance is
