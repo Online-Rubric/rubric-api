@@ -22,9 +22,10 @@ class RubricDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = RubricSerializer
 
 class StudentList(ListAPIView):
-    queryset = get_user_model().objects.filter(is_staff=False)
+    queryset = get_user_model().objects.all()
     serializer_class = StudentSerializer
 
 class ProctorList(ListAPIView):
-    queryset = get_user_model().objects.filter(is_staff=True)
+    queryset = get_user_model().objects.all()
     serializer_class = ProctorSerializer
+
